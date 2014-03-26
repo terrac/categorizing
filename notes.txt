@@ -1,0 +1,148 @@
+1 cleanup 
+  a put selftext if available
+  b make sure comments actually show up
+
+ b implement different getters
+   1 date on creation
+   2 category tree 
+   3 limit to specific subreddits (default, a couple of large subs)
+   4 limit to score (default to high%, high score)
+  c implement refresh
+   1 save clicked on elements according to date
+   2 give a "total clicked links, that counts"
+   3 only pull back new links
+   4 do query like normal
+     for each thing pulled back do batch gets to verify that they are new things, (by building a key of username+url), then pull back first x
+
+
+1 start backend
+  #a just do pure pullback
+  #d implement clicking on link to dissapear, and add to the 5 tabbed clicked
+  e implement ignore button
+2 updown widget 
+  a score data item
+  b it can hold multiple things
+  c it has a reporting system
+1 reference explanation (up to 5 other links can be added as reference explanations)
+  a both user input of categories and explanations have a up/down vote widget
+
+
+
+1 do the individual page that shows stuff with the category selection
+  a display link/5 comments/score/title
+
+e clicking on links dissapears them (with additional selector), clicking ignore permanently ignores
+  f there is a refresh button (all pulled from the selector are put to the bottom of the list
+    and the bottom of the list is marked
+  
+1 reference explanation (up to 5 other links can be added as reference explanations)
+  a both user input of categories and explanations have a up/down vote widget
+
+2 updown widget 
+  a score data item
+  b it can hold multiple things
+  c it has a reporting system
+
+
+
+
+
+
+
+
+
+  b select some combination and you will get a listing of 5 links
+  c defaults set appropriately
+  g  
+
+
+
+
+
+
+1 do the tree element
+  a top level selectors date,category,subreddit,score,score%
+    1 first is a date range, with a default of the past week (two date pickers)
+    2 the second is a tree based category system (each top level category contains all
+      beneath it)
+    3 subreddits offer some choices, changes based on the categories selected
+    4 score allows for 2 numbers
+    5 score % pulls the score% closest to that
+    6 each one is a tab, with some space added for the stuff  
+
+#1 make the cache expire after 30 minutes
+#2 run the test
+4 put the bot into a scheduled servlet task
+6 time to start using
+
+5 write a bot that automatically does popular scores on reddits (form can force addition)
+  a write a page that takes a list of subreddits
+  b it then pulls the hot listing of those
+  c it grabs the information and stores it
+  d then write a tree element that displays it
+  tree format, 5 comments, link, score
+  ability to add categories
+  date time limiter
+
+1 put at least urls on frontend and a pick subreddit option
+  a move code to frontend
+  b make it so that it lists by title in a dropdown
+  c on dropdown select it sets the url, saves the title, and then you pick categories
+
+2 do rest call to pull down comments
+ a list them out, along with title and score
+ 0
+   
+4 tree format
+
+
+
+1 offer a couple random urls to pick from
+ http://www.reddit.com/dev/api#GET_hot  (test and look for upvotes here)
+ http://www.reddit.com/r/changemyview/hot/.json
+ 
+
+2 on submit the code does a reddit rest call to the thread  and pulls down the top 5 comments
+http://www.reddit.com/dev/api#GET_comments_{article}
+http://www.reddit.com/comments/210xgq.json?depth=1&limit1
+
+3 write page that has first 5 comments/ up/down votes / name / link to page / categories
+
+4 write page where you can go into a tree format and pop out categories with first 5 lnks
+  and a page that shows all the links
+5 add a side option to restrict by dates/upvote %
+
+the basic idea is reducedreddit.com
+The theory is that reddit encourages addiction by not preserving old stuff very well
+and thus making it easy to feel like you miss stuff.  This allows you to avoid that 
+feeling.  
+
+1 run and test form
+
+
+
+1 write basic html form
+2 add a hook for gwt
+3 gwt adds up to 10 buttons through an ajax call to an objectify service.
+4 form has a url link, a comma delimited list that is changed through the buttons
+6 on submit the code does a reddit rest call to the thread  and pulls down the top 5 comments
+  (if it hasn't updated today and it was pulled down recently then it tries to update once a day)
+7 the basic idea is that reddit users can categorize recent topics of a subreddit
+
+And finally you apply categories to yourself to allow another categorization
+
+
+
+
+
+
+
+1 write a submission form
+2 must be logged into google to submit
+3 must give an appropriately formatted reddit url (it uses ajax to test)
+4 10 buttons and a comma delimited list, buttons add that category name to the list
+5 submit button
+
+6 on submit the code does a reddit rest call to the thread  and pulls down the top 5 comments
+  (if it hasn't updated today and it was pulled down recently then it tries to update once a day)
+7 the basic idea is that reddit users can categorize recent topics of a subreddit

@@ -1,6 +1,72 @@
-1 cleanup 
-  a put selftext if available
-  b make sure comments actually show up
+1 set the height on the tab to be 90% of the page
+2 add a history tab (where the rest get added in a sub tab)
+3 add 2 potential categories and a ignore (funny/notfunny/not relevant)
+4 on setting the category move the tab to history with saved category
+5 have a "reveal" button that shows the rest
+6 keep statistics on your personal usage of reddit
+
+1 make default query include full list
+#2 default dark theme
+
+
+1 create default query to return on sending string
+2 return 100 links (by default)
+3 on click, pull off one of those links, 
+  (eventually try to mark it as visited after a few seconds)
+4 cycle through on a tablet/phone/laptop and see how it works  
+  
+
+
+1 poll frontpage
+  create a "random" off of the frontpage with 5 comments
+  b clicking on it takes you to the next one, it does inline images
+    it displays 5 comments, and touching it takes you to the next one x
+
+1 goals
+  make it so that i can come in once a week and feel like I haven't missed anything on reddit
+2 to do those goals
+  poll reddit front page for a week (eventually polling other pages)
+  create a query that shows the top front pages
+   
+  
+
+1 write
+  http://www.reddit.com/r/all/hot/.json
+  create 5 random queries box
+  do query save button
+2 
+  
+
+1 specific category from subreddits
+  a a list of subreddits to pull from, turn into a link to a specific query
+  b eventually you can find it off of a category tree
+2  
+
+1 create tree
+  a button to add new category
+  b categories are initially personal categories, they get promoted to public
+    if they are approved
+  c initially general -> (funny/great/learning)  
+
+1 category selection
+  a a widget on links to set a category
+    1 top level tree that you can click down into, 
+    2 each selected category is a tree with that element selected
+      a "go to parent" option, and associated children options
+  b initial 5 categories are funny/notfunny/    
+
+1 turn comments into partially minimized trees (the first 5 unminimized)
+  pull back minor comments
+
+1 determine how to paginate pullbacks so that already hit items can be eliminated
+  a do a query for keys
+  b save the keys, and the query in a temporary cache
+  c run through keys, converting to history
+  d keep a current location on the query and a % completed
+  e
+#1 cleanup 
+#  a put selftext if available
+#  b make sure comments actually show up
 
  b implement different getters
    1 date on creation
@@ -25,6 +91,17 @@
   c it has a reporting system
 1 reference explanation (up to 5 other links can be added as reference explanations)
   a both user input of categories and explanations have a up/down vote widget
+
+
+
+
+
+
+
+
+
+
+
 
 
 

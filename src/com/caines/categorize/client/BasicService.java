@@ -1,5 +1,6 @@
 package com.caines.categorize.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.caines.categorize.shared.datamodel.RLink;
@@ -14,5 +15,7 @@ public interface BasicService extends RemoteService {
 	List<String> categoriesServer(String name) throws IllegalArgumentException;
 	void sendServer(String link,String categories) throws IllegalArgumentException;
 	void addCategory(String category);
-	List<RLink> getRlinks();
+	List<RLink> getRlinks(Date from, Date to, Integer minScore,
+			Double scorePercent);
+	List<RLink> getRlinks(String name);
 }

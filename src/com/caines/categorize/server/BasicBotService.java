@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.caines.categorize.shared.datamodel.Comment;
 import com.caines.categorize.shared.datamodel.JsonCache;
 import com.caines.categorize.shared.datamodel.RLink;
 import com.google.gson.JsonElement;
@@ -57,7 +58,11 @@ public class BasicBotService extends HttpServlet {
 				){
 			je = new JsonParser().parse(jsonc.text);			
 		} else {
-			JsonReader reader = new JsonReader(new InputStreamReader(new URL(urlpath).openStream(), "UTF-8"));
+			URL url = new URL(urlpath);
+			url.openConnection().setRequestProperty("User-Agent", "terra");
+			InputStreamReader inputStreamReader = new InputStreamReader(url.openStream(), "UTF-8");
+		
+			JsonReader reader = new JsonReader(inputStreamReader);
 			je=new JsonParser().parse(reader);
 			Thread.sleep(3000);
 			SDao.getJsonCacheDao().put(new JsonCache(urlpath,je.toString()));
@@ -67,13 +72,30 @@ public class BasicBotService extends HttpServlet {
 	}
 	private static void doComments(RLink rl,String id) throws IOException, InterruptedException {
 			JsonElement je= getJSON("http://www.reddit.com/comments/"+id+".json?");
-			for(JsonElement j : je.getAsJsonArray().get(0).getAsJsonObject().get("data").getAsJsonObject().get("children").getAsJsonArray()){
-				JsonObject jo = j.getAsJsonObject().get("data").getAsJsonObject();
-				String text=jo.get("selftext").getAsString();
-				int score = jo.get("score").getAsInt();
-				rl.addComment(text);
-			}
+			doComments(rl.comments, je.getAsJsonArray().get(1));
+	
 			SDao.getRLinkDao().put(rl);
+
+	}
+
+	private static void doComments(Comment c, JsonElement je) throws IOException, InterruptedException {
+		for(JsonElement j : je.getAsJsonObject().get("data").getAsJsonObject().get("children").getAsJsonArray()){
+			JsonObject jo = j.getAsJsonObject().get("data").getAsJsonObject();
+			if(!jo.has("body")){
+				continue;
+			}
+			String text=jo.get("body").getAsString();
+			//int score = jo.get("score").getAsInt();
+
+			Comment addChild = c.addChild();
+			addChild.value = text;
+			JsonElement jec = jo.get("replies");
+			if(!jec.isJsonObject()){
+				continue;
+			}
+			doComments(addChild, jec);
+			
+		}
 
 	}
 }

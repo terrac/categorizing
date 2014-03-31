@@ -1,6 +1,5 @@
 package com.caines.categorize.server.datamodel;
 
-import com.caines.categorize.shared.datamodel.Category;
 import com.caines.categorize.shared.datamodel.RLink;
 
 public class RLinkUtil {

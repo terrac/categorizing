@@ -10,12 +10,14 @@ import java.util.List;
 
 
 
+
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 import com.caines.categorize.server.SDao;
 import com.google.appengine.api.datastore.Blob;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Serialized;
 
 
 public class RLink implements Serializable{
@@ -36,18 +38,14 @@ public class RLink implements Serializable{
 	public String selftext;
 	public int score;
 	public Date created;
-	List<String> comments = new ArrayList<String>();
+	@Serialized
+	public Comment comments = new Comment();
 	public List<Category> categories = new ArrayList<Category>();
 	
 	public Key<RLink> getKey(){
 		return new Key(RLink.class,id);
 	}
 	
-	public void addComment(String comment){
-		comments.add(comment);
-	}
-	public List<String> getComments() {
-		return comments;
-	}
+	
 	
 }

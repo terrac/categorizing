@@ -10,6 +10,7 @@ import com.caines.categorize.shared.FieldVerifier;
 import com.caines.categorize.shared.datamodel.RLink;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -63,8 +64,12 @@ public class Categorizing implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-	    showTabs();
-		
+		if(true){
+			new SimpleFront().show();
+		} else {
+			showTabs();
+		}
+	    
 	
 	}
 
@@ -150,13 +155,14 @@ public class Categorizing implements EntryPoint {
 		
 		flowpanel = new HorizontalPanel();
 		flowpanel.add(new Label("From"));
-		DatePicker todp = new DatePicker();
+		final DatePicker fromDP = new DatePicker();
+		final DatePicker todp = new DatePicker();
 		Date currentDate = new Date();
 		CalendarUtil.addDaysToDate( currentDate, -7 );
 		todp.setValue(currentDate);
 		flowpanel.add(todp);
 		flowpanel.add(new Label("To"));
-		flowpanel.add(new DatePicker());
+		flowpanel.add(fromDP);
 		panel.add(flowpanel, "Date");
 
 		panel.add(showTree(), "Category");
@@ -175,9 +181,8 @@ public class Categorizing implements EntryPoint {
 		panel.addStyleName("table-center");
 		
 		RootPanel.get().add(panel);
-		
 		final VerticalPanel vp=new VerticalPanel();
-		greetingService.getRlinks(new AsyncCallback<List<RLink>>() {
+		greetingService.getRlinks(fromDP.getValue(),todp.getValue(),5,.2,new AsyncCallback<List<RLink>>() {
 			
 			@Override
 			public void onSuccess(List<RLink> result) {
@@ -220,16 +225,11 @@ public class Categorizing implements EntryPoint {
 			page =  new TabPanel();
 			RootPanel.get().add(page);
 		}
-		flowpanel = new FlowPanel();
+		flowpanel = new VerticalPanel();
+		flowpanel.getElement().setAttribute("cellpadding", "5");
 		page.insert(flowpanel, page.getTabBar().getTabCount()+"",0);
 		page.selectTab(0);
-		flowpanel.add(new Anchor(rl.text,rl.url));
-		for(String comment : rl.getComments()){
-			flowpanel.add(new Label(comment));	
-		}
-//		flowpanel.add(new Label("comment"));
-//		flowpanel.add(new Label("comment"));
-//		flowpanel.add(new Label("comment"));
+		SimpleFront.displayPage(rl, flowpanel);
 
 		
 	}

@@ -1,19 +1,14 @@
 package com.caines.categorize.server;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.caines.categorize.client.BasicService;
 import com.caines.categorize.shared.datamodel.Category;
 import com.caines.categorize.shared.datamodel.RLink;
-import com.google.gson.stream.JsonReader;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.googlecode.objectify.Query;
 
 /**
  * The server-side implementation of the RPC service.
@@ -46,11 +41,27 @@ public class BasicServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<RLink> getRlinks() {
-		List<RLink> rlist=SDao.getRLinkDao().getQuery()
-				//.filter("date >", new Date())
-				.limit(5).list();
-		return rlist;
+	public List<RLink> getRlinks(Date from, Date to,Integer minScore,Double scorePercent) {
+		Query<RLink> q=SDao.getRLinkDao().getQuery();
+				if(from != null){
+				q.filter("date >", from).filter("date <", to);	
+				}
+				if(minScore != null){
+					q.filter("score > ", minScore);
+				}
+				if(scorePercent != null){
+					//q.filter("scorePercent >", scorePercent);
+				}
+				q.limit(50);
+		if(q.list().size() < 6){
+			return q.list();
+		}
+		return new ArrayList<>(q.list().subList(0, 5));
+	}
+
+	@Override
+	public List<RLink> getRlinks(String name) {
+		return getRlinks(null, null, null, null);
 	}
 	
 	

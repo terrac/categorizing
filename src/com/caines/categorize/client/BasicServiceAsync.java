@@ -1,5 +1,6 @@
 package com.caines.categorize.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.caines.categorize.shared.datamodel.RLink;
@@ -13,6 +14,10 @@ public interface BasicServiceAsync {
 
 	void addCategory(String category,AsyncCallback<Void> callback);
 
-	void getRlinks(AsyncCallback<List<RLink>> callback);
+
+	void getRlinks(Date from, Date to, Integer minScore, Double scorePercent,
+			AsyncCallback<List<RLink>> callback);
+
+	void getRlinks(String name, AsyncCallback<List<RLink>> callback);
 
 }
